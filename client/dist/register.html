@@ -1,18 +1,69 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>AWS User Group 抽獎報名</title>
-  </head>
-  <body>
+
+<head>
+  <meta charset="UTF-8">
+  <title>AWS User Group 抽獎報名</title>
+  <style>
+    .wrapper {
+      min-width: 800px;
+      margin-left: 5%;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
     <h1>AWS User Group 抽獎報名</h1>
 
-    <form method="POST" action="/api/register">
-      <label for="roleArn">Role Arn: </label>
-      <input name="roleArn">
-      <label for="email">Email: </label>
-      <input name="email">
-      <button>送出</button>
-    </form>
-  </body>
+    <div>
+      <ul>
+        <li>活動時間 (API 開放): 06/27 13:00 至 06/28 16:00</li>
+        <li>06/28 17:15 於 AWS User Group Taiwan 攤位抽出得獎者並寄發通知。</li>
+      </ul>
+    </div>
+
+    <div>
+      <h2>活動說明</h2>
+      <p>
+        在這個任務裡，你需要透過建立 IAM Role 並妥善授權，向全世界 (的一小部分) 證明自己的能力！
+
+        <ol>
+            <li></li>
+          </ol>
+      </p>
+
+      <p>
+        備註:
+        <ul>
+          <li>每個 Email Address / AWS Account 只能參加一次</li>
+          <li>本活動由 AWS User Group Taiwan 主辦，以下簡稱 AWSUGTW，與 iThome、AWS 無關</li>
+          <li>活動獎品由 AWS 贊助提供</li>
+          <li>參加者必須不是本專案之開發者</li>
+        </ul>
+      </p>
+    </div>
+
+    <div>
+      <h2>報名表單</h2>
+      <form method="POST" action="/api/register">
+        <label for="roleArn">Role Arn: </label>
+        <input name="roleArn">
+        <label for="email">Email: </label>
+        <input name="email">
+        <button>送出</button>
+      </form>
+    </div>
+
+    <div>
+      <h2>個資使用說明</h2>
+
+      <ul>
+        <li>AWSUGTW 將加密儲存參加者 Email 供抽獎與領獎通知使用，並在活動後刪除</li>
+        <li>得獎者需在領獎時簽收，相關個資僅作領取證明之用，並在活動後銷毀</li>
+      </ul>
+    </div>
+  </div>
+</body>
+
 </html>
