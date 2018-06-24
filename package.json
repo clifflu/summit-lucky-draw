@@ -1,0 +1,24 @@
+{
+  "name": "summit-lucky-draw",
+  "version": "0.0.0",
+  "description": "For AWS User Group lucky draw at Summit '18 Taipei.",
+  "main": "handler.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+    "serverless-finch": "^2.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/clifflu/summit-lucky-draw.git"
+  },
+  "author": "Cliff Chao-kuan Lu <clifflu@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/clifflu/summit-lucky-draw/issues"
+  },
+  "homepage": "https://github.com/clifflu/summit-lucky-draw#readme"
+}

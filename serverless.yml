@@ -1,0 +1,48 @@
+# For full config options, check the docs:
+#    docs.serverless.com
+
+service: summit-lucky-draw
+
+custom:
+  client:
+    bucketName: origin.summit18.awsug.tw
+  conf: # Match those in mail templates as well
+    domain: summit18.awsug.tw
+    sender: no-reply@awsug.tw
+    verifierArn: arn:aws:iam::406053587786:role/verifierSummit18
+
+provider:
+  name: aws
+  runtime: nodejs6.10
+  stage: prod
+  region: us-west-2
+  environment:
+    hello: world
+  iamRoleStatements:
+    - Effect: "Allow"
+      Action: "sts:AssumeRole"
+      Resource: ${self:custom.conf.verifierArn}
+
+plugins:
+  - serverless-finch
+
+functions:
+  hello:
+    handler: handler.hello
+    events:
+     - http:
+         path: hello
+         method: get
+#    environment:
+#      variable2: value2
+
+#resources:
+#  Resources:
+#    NewResource:
+#      Type: AWS::S3::Bucket
+#      Properties:
+#        BucketName: my-new-bucket
+#  Outputs:
+#     NewOutput:
+#       Description: "Description for the output"
+#       Value: "Some output value"
