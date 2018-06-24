@@ -40,12 +40,36 @@ functions:
          path: api/verify
          method: get
 
-#resources:
-#  Resources:
-#    NewResource:
-#      Type: AWS::S3::Bucket
-#      Properties:
-#        BucketName: my-new-bucket
+resources:
+  Resources:
+    MasterKey:
+      Type: AWS::KMS::Key
+      Properties:
+        KeyPolicy:
+          Version: '2012-10-17'
+          Id: 'key-default-1'
+          Statement:
+            - Sid: 'well well well'
+              Effect: Allow
+              Principal:
+                AWS:
+                  Fn::Join:
+                    - ':'
+                    - - 'arn:aws:iam:'
+                      - Ref: AWS::AccountId
+                      - 'root'
+              Action: 'kms:*'
+              Resource: '*'
+        Tags:
+          - Key: Name
+            Value: "AWS Summit 18 UG"
+    MasterKeyAlias:
+      Type: AWS::KMS::Alias
+      Properties:
+        AliasName: alias/summit18
+        TargetKeyId:
+          Ref: MasterKey
+
 #  Outputs:
 #     NewOutput:
 #       Description: "Description for the output"
