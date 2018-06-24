@@ -1,3 +1,6 @@
+.DS_Store
+*.swp
+
 # package directories
 node_modules
 jspm_packages
