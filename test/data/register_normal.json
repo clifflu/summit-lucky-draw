@@ -1,0 +1,8 @@
+{
+  "resource": "/api/register",
+  "path": "/api/register",
+  "httpMethod": "POST",
+  "body":
+    "roleArn=arn%3Aaws%3Aiam%3A%3A406053587786%3Arole%2Fdemo&email=clifflu%40gmail.com&submit=",
+  "isBase64Encoded": false
+}
