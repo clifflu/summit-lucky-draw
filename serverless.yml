@@ -27,14 +27,18 @@ plugins:
   - serverless-finch
 
 functions:
-  hello:
-    handler: handler.hello
+  register:
+    handler: handler.register
     events:
      - http:
-         path: hello
+         path: api/register
+         method: post
+  verify:
+    handler: handler.verify
+    events:
+     - http:
+         path: api/verify
          method: get
-#    environment:
-#      variable2: value2
 
 #resources:
 #  Resources:
