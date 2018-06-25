@@ -10,6 +10,9 @@ custom:
     domain: summit18.awsug.tw
     sender: no-reply@awsug.tw
     verifierArn: arn:aws:iam::406053587786:role/verifierSummit18
+  crypto:
+    hkey: defaultKey
+    kmsKeyAlias: alias/summit18
 
 provider:
   name: aws
@@ -17,12 +20,16 @@ provider:
   stage: prod
   region: us-west-2
   environment:
-    hello: world
+    domain: ${self:custom.conf.domain}
+    hkey: ${self:custom.crypto.hkey}
+    kmsKeyAlias: ${self:custom.crypto.kmsKeyAlias}
   iamRoleStatements:
     - Effect: "Allow"
       Action: "sts:AssumeRole"
       Resource: ${self:custom.conf.verifierArn}
-
+    - Effect: "Allow"
+      Action: "kms:Encrypt"
+      Resource: {Fn::GetAtt: [MasterKey, Arn]}
 plugins:
   - serverless-finch
 
@@ -30,15 +37,15 @@ functions:
   register:
     handler: handler.register
     events:
-     - http:
-         path: api/register
-         method: post
+      - http:
+          path: api/register
+          method: post
   verify:
     handler: handler.verify
     events:
-     - http:
-         path: api/verify
-         method: get
+      - http:
+          path: api/verify
+          method: get
 
 resources:
   Resources:
@@ -66,7 +73,7 @@ resources:
     MasterKeyAlias:
       Type: AWS::KMS::Alias
       Properties:
-        AliasName: alias/summit18
+        AliasName: ${self:custom.crypto.kmsKeyAlias}
         TargetKeyId:
           Ref: MasterKey
     RegList:
@@ -137,8 +144,3 @@ resources:
           ScaleOutCooldown: 60
           PredefinedMetricSpecification:
             PredefinedMetricType: DynamoDBWriteCapacityUtilization
-
-#  Outputs:
-#     NewOutput:
-#       Description: "Description for the output"
-#       Value: "Some output value"
