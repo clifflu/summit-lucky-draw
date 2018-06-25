@@ -7,4 +7,6 @@ function verify(evt, ctx, cb) {
   cb(null, response);
 }
 
-module.exports = verify
+module.exports = {
+  verify
+}

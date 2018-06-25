@@ -2,8 +2,6 @@
 const AWS = require('aws-sdk')
 const querystring = require('querystring')
 
-const DOMAIN = process.env.DOMAIN || 'summit18.awsug.tw'
-
 function extractRoleArn(s) {
   s = s.trim()
 
@@ -47,19 +45,6 @@ function register(evt, ctx) {
     .then(saveRecord)
 }
 
-function _register(evt, ctx, cb) {
-  register(evt, ctx)
-    .then(data => cb(null, {
-      statusCode: 303, 
-      body: `Location: https://${DOMAIN}/ack.html`
-    }))
-    .catch(err => {
-      console.error(err)
-      cb(null, {
-        statusCode: 400,
-        body: 'Bad request'
-      })
-    })
+module.exports = {
+  register,
 }
-
-module.exports = _register
