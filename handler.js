@@ -1,24 +1,29 @@
 const DOMAIN = process.env.DOMAIN;
 
-function promised(fp, successPath, failPath) {
+function wrapped(fp, successPath, failPath) {
+  function redir(path, cb) {
+    cb(null, {
+      statusCode: 303,
+      headers: {
+        location: `https://${DOMAIN}/${path}`
+      }
+    });
+  }
+
   return (evt, ctx, cb) => {
     fp(evt, ctx)
-      .then(data =>
-        cb(null, {
-          statusCode: 303,
-          body: `Location: https://${DOMAIN}/${successPath}`
-        })
-      )
+      .then(_ => redir(successPath, cb))
       .catch(err => {
         console.error(err);
-        cb(null, {
-          statusCode: 303,
-          body: `Location: https://${DOMAIN}/${failPath}`
-        });
+        redir(failPath, cb);
       });
   };
 }
 
 module.exports = {
-  register: promised(require("./src/register").register, "success.html", "again.html")
+  register: wrapped(
+    require("./src/register").register,
+    "success.html",
+    "again.html"
+  )
 };
