@@ -41,15 +41,14 @@
     <div class="section">
       <h2>活動說明</h2>
       <p>
-        IAM Role 是 AWS 授權系統中的關鍵，廣泛用於帳號內、跨帳號與 AWS 服務之授權。 在這個任務裡，你需要透過建立並妥善授權 IAM Role，向全世界 (的一小部分) 證明自己的能力！
+        IAM Role 是 AWS 授權系統中的關鍵，廣泛用於帳號內、跨帳號與 AWS 服務之授權。 在這個任務裡，你需要透過建立並妥善授權 IAM Role，向全世界 (的一小部分) 證明自己的能力，並獲得抽獎資格！
 
         <ul>
-          <li>[optional] 建立 AWS 帳號</li>
-          <li>創建 AWS Role，並授權
+          <li>[optional] 創建 AWS 帳號</li>
+          <li>創建 IAM Role，並授權
             <code>arn:aws:iam::406053587786:root</code> 透過
-            <code>sts:AssumeRole</code> 轉換身份</li>
-          <li>在下列表單填入聯絡用的 Email 與新建的 Role Arn</li>
-          <li>至填入的信箱收信，並點擊隨附的連接以確認信箱；若遲未收到信件，請檢查垃圾郵件信箱，並確認是否輸入正確</li>
+            <code>sts:AssumeRole</code> 轉換身份至該 IAM Role</li>
+          <li>在下方表單填入聯絡用的 Email 與新建的 Role Arn 並送出</li>
         </ul>
       </p>
 
@@ -57,7 +56,7 @@
     </div>
 
     <div class="section">
-      <h2>報名表單</h2>
+      <h2>報名表</h2>
 
       <form method="POST" action="/api/register" id="frmRegister">
         <div class="input">
@@ -99,7 +98,7 @@
 
       <ul>
         <li>AWSUGTW 將加密儲存參加者 Email 供抽獎與領獎通知使用，並在活動後刪除</li>
-        <li>得獎者需在領獎時簽收或提供收件資訊，相關文件將在活動後銷毀</li>
+        <li>得獎者在領獎時需簽收並提供收件資訊，相關文件將在活動後銷毀</li>
       </ul>
     </div>
   </div>
