@@ -1,6 +1,117 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta http-equiv="refresh" content="0; URL='register.html'" />
-  </head>
+
+<head>
+  <meta charset="UTF-8">
+  <title>AWS User Group 抽獎</title>
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+
+  <style>
+    .wrapper {
+      max-width: 800px;
+      margin: 0 8%;
+    }
+
+    #frmRegister div {
+      line-height: 1.8;
+    }
+
+    .input label {
+      display: inline-block;
+      min-width: 5em;
+    }
+
+    .input input {
+      display: inline-block;
+      min-width: 55em;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <h1>AWS User Group 抽獎</h1>
+
+    <ul class="section">
+      <li>活動時間 (API 開放): 06/27 13:00 至 06/28 15:00</li>
+      <li>06/28 16:00 於 AWS User Group Taiwan 攤位抽出得獎者並寄發通知。</li>
+    </ul>
+
+    <div class="section">
+      <h2>活動說明</h2>
+      <p>
+        IAM Role 是 AWS 授權系統中的關鍵，廣泛用於帳號內、跨帳號與 AWS 服務之授權。 在這個任務裡，你需要透過建立並妥善授權 IAM Role，向全世界 (的一小部分) 證明自己的能力！
+
+        <ul>
+          <li>[optional] 建立 AWS 帳號</li>
+          <li>創建 AWS Role，並授權
+            <code>arn:aws:iam::406053587786:root</code> 透過
+            <code>sts:AssumeRole</code> 轉換身份</li>
+          <li>在下列表單填入聯絡用的 Email 與新建的 Role Arn</li>
+          <li>至填入的信箱收信，並點擊隨附的連接以確認信箱；若遲未收到信件，請檢查垃圾郵件信箱，並確認是否輸入正確</li>
+        </ul>
+      </p>
+
+
+    </div>
+
+    <div class="section">
+      <h2>報名表單</h2>
+
+      <form method="POST" action="/api/register" id="frmRegister">
+        <div class="input">
+          <label for="roleArn">Role Arn: </label>
+          <input id="roleArn" name="roleArn">
+        </div>
+
+        <div class="input">
+          <label for="email">Email: </label>
+          <input id="email" name="email">
+        </div>
+
+
+        <div>
+          <input id="privacy" type="checkbox" name="privacy">
+          <label for="privacy">同意提供個資供抽獎使用</label>
+        </div>
+
+        <div class="input">
+          <label for="submit"></label>
+          <button id="submit" name="submit" disabled>送出</button>
+        </div>
+
+      </form>
+    </div>
+
+    <div>
+      <h2>備註</h2>
+
+      <ul>
+        <li>每個 Email Address / AWS Account 只能參加一次</li>
+        <li>本活動由 AWS User Group Taiwan 主辦，iThome、AWS 不為是次活動負責</li>
+        <li>活動獎品由 AWS 贊助提供</li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <h2>個資使用說明</h2>
+
+      <ul>
+        <li>AWSUGTW 將加密儲存參加者 Email 供抽獎與領獎通知使用，並在活動後刪除</li>
+        <li>得獎者需在領獎時簽收或提供收件資訊，相關文件將在活動後銷毀</li>
+      </ul>
+    </div>
+  </div>
+</body>
+
+<script>
+  $(() => {
+    $('#privacy').on('change', function () {
+      $('#submit').prop('disabled', !$(this).prop('checked'))
+    })
+
+  })
+</script>
+
 </html>

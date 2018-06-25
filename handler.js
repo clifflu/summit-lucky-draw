@@ -1,25 +1,24 @@
 const DOMAIN = process.env.DOMAIN;
 
-function promised(fp, redirPath) {
+function promised(fp, successPath, failPath) {
   return (evt, ctx, cb) => {
     fp(evt, ctx)
       .then(data =>
         cb(null, {
           statusCode: 303,
-          body: `Location: https://${DOMAIN}/${redirPath}`
+          body: `Location: https://${DOMAIN}/${successPath}`
         })
       )
       .catch(err => {
         console.error(err);
         cb(null, {
-          statusCode: 400,
-          body: "Bad request"
+          statusCode: 303,
+          body: `Location: https://${DOMAIN}/${failPath}`
         });
       });
   };
 }
 
 module.exports = {
-  register: promised(require("./src/register").register, "ack.html"),
-  verify: promised(require("./src/verify").verify, "success.html")
+  register: promised(require("./src/register").register, "success.html", "again.html")
 };

@@ -4,7 +4,8 @@
   "description": "For AWS User Group lucky draw at Summit '18 Taipei.",
   "main": "handler.js",
   "dependencies": {
-    "aws-sdk": "^2.263.1"
+    "aws-sdk": "^2.263.1",
+    "mustache": "^2.3.0"
   },
   "devDependencies": {
     "serverless-finch": "^2.1.2"
