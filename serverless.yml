@@ -6,7 +6,7 @@ service: summit-lucky-draw
 custom:
   client:
     bucketName: origin.summit18.awsug.tw
-  conf: # Match those in mail templates as well
+  conf: # Mind corresponding static files
     domain: summit18.awsug.tw
     verifierArn: arn:aws:iam::406053587786:role/verifierSummit18
     fromAddress: no-reply@awsug.tw
