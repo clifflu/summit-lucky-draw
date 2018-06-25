@@ -1,11 +1,13 @@
 const AWS = require("aws-sdk");
 const crypto = require("crypto");
 const querystring = require("querystring");
-const util = require("util");
 
 const hKey = Buffer.from(process.env.H_KEY);
 const kmsKeyAlias = process.env.KMS_KEY_ALIAS;
 const regListName = process.env.REG_LIST;
+
+const mailSubject = `AWS User Group 抽獎確認`;
+const due = Date.parse('2018-06-28T07:00:00Z')
 
 function checkUgcRoleArn(s) {
   s = s.trim();
@@ -37,6 +39,13 @@ function checkUgc(payload) {
   };
 
   return Object.assign(payload, { input });
+}
+
+function verifyRole(payload) {
+  let sts = new AWS.STS()
+
+  
+  return payload
 }
 
 function processInputHmac(src) {
@@ -97,14 +106,24 @@ function saveRecord(payload) {
     .then(_ => payload);
 }
 
+function sendMail(payload) {
+  return payload
+}
+
 function register(evt, ctx) {
+  if (Date.now() > due) {
+    return Promise.reject('due')
+  }
+
   let tmp = querystring.parse(evt.body);
   let ugc = { roleArn: tmp.roleArn, email: tmp.email };
 
   return Promise.resolve({ ugc })
     .then(checkUgc)
+    .then(verifyRole)
     .then(processInput)
-    .then(saveRecord);
+    .then(saveRecord)
+    .then(sendMail);
 }
 
 module.exports = {
