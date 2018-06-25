@@ -37,7 +37,9 @@ provider:
       Condition:
         StringEquals:
           ses:FromAddress: ${self:custom.conf.fromAddress}}
-
+    - Effect: "Allow"
+      Action: "dynamodb:PutItem"
+      Resource: {Fn::GetAtt: [RegList, Arn]}
 plugins:
   - serverless-finch
 
@@ -82,8 +84,7 @@ resources:
       Type: AWS::KMS::Alias
       Properties:
         AliasName: ${self:custom.conf.kmsKeyAlias}
-        TargetKeyId:
-          Ref: MasterKey
+        TargetKeyId: {Ref: MasterKey}
     RegList:
       Type: AWS::DynamoDB::Table
       Properties:

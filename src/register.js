@@ -3,8 +3,9 @@ const crypto = require("crypto");
 const querystring = require("querystring");
 const util = require("util");
 
-const hKey = Buffer.from(process.env.H_KEY)
+const hKey = Buffer.from(process.env.H_KEY);
 const kmsKeyAlias = process.env.KMS_KEY_ALIAS;
+const regListName = process.env.REG_LIST;
 
 function checkUgcRoleArn(s) {
   s = s.trim();
@@ -32,7 +33,7 @@ function checkUgcEmail(s) {
 function checkUgc(payload) {
   let input = {
     roleArn: checkUgcRoleArn(payload.ugc.roleArn),
-    email: checkUgcEmail(payload.ugc.email),
+    email: checkUgcEmail(payload.ugc.email)
   };
 
   return Object.assign(payload, { input });
@@ -85,9 +86,15 @@ function processInput(payload) {
 
 function saveRecord(payload) {
   let ddb = new AWS.DynamoDB();
+  let params = {
+    TableName: regListName,
+    Item: payload.item
+  };
 
-  console.log(util.inspect({ payload }, { depth: null }));
-  return payload;
+  return ddb
+    .putItem(params)
+    .promise()
+    .then(_ => payload);
 }
 
 function register(evt, ctx) {
