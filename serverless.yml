@@ -10,7 +10,7 @@ custom:
     domain: summit18.awsug.tw
     verifierArn: arn:aws:iam::406053587786:role/verifierSummit18
     fromAddress: no-reply@awsug.tw
-    hKey: ${opt:defaultKey, 'defaultKey'}
+    hKey: ${env:defaultKey, 'defaultKey'}
     kmsKeyAlias: alias/summit18
 
 provider:
