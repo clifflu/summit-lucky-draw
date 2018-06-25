@@ -1,5 +1,6 @@
 .DS_Store
 *.swp
+testdata
 
 # package directories
 node_modules
