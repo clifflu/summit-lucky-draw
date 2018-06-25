@@ -79,13 +79,13 @@ resources:
           - AttributeName: HEmail
             KeyType: HASH
         ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
     WriteCapacityScalableTarget:
       Type: AWS::ApplicationAutoScaling::ScalableTarget
       Properties:
         MaxCapacity: 150
-        MinCapacity: 5
+        MinCapacity: 1
         ResourceId: 
           Fn::Join:
             - /
