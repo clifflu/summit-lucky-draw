@@ -8,10 +8,11 @@ custom:
     bucketName: origin.summit18.awsug.tw
   conf: # Match those in mail templates as well
     domain: summit18.awsug.tw
-    sender: no-reply@awsug.tw
     verifierArn: arn:aws:iam::406053587786:role/verifierSummit18
+  email:
+    fromAddress: no-reply@awsug.tw
   crypto:
-    hkey: defaultKey
+    hKey: defaultKey
     kmsKeyAlias: alias/summit18
 
 provider:
@@ -20,9 +21,10 @@ provider:
   stage: prod
   region: us-west-2
   environment:
-    domain: ${self:custom.conf.domain}
-    hkey: ${self:custom.crypto.hkey}
-    kmsKeyAlias: ${self:custom.crypto.kmsKeyAlias}
+    DOMAIN: ${self:custom.conf.domain}
+    H_KEY: ${self:custom.crypto.hKey}
+    KMS_KEY_ALIAS: ${self:custom.crypto.kmsKeyAlias}
+    FROM_ADDRESS: ${self:custom.email.fromAddress}
   iamRoleStatements:
     - Effect: "Allow"
       Action: "sts:AssumeRole"
@@ -30,6 +32,13 @@ provider:
     - Effect: "Allow"
       Action: "kms:Encrypt"
       Resource: {Fn::GetAtt: [MasterKey, Arn]}
+    - Effect: "Allow"
+      Action: "ses:SendEmail"
+      Resource: "*"
+      Condition:
+        StringEquals:
+          ses:FromAddress: ${self:custom.email.fromAddress}}
+
 plugins:
   - serverless-finch
 

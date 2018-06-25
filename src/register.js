@@ -3,7 +3,8 @@ const crypto = require("crypto");
 const querystring = require("querystring");
 const util = require("util");
 
-const kmsKeyAlias = process.env.kmsKeyAlias;
+const hKey = Buffer.from(process.env.H_KEY)
+const kmsKeyAlias = process.env.KMS_KEY_ALIAS;
 
 function checkUgcRoleArn(s) {
   s = s.trim();
@@ -32,15 +33,13 @@ function checkUgc(payload) {
   let input = {
     roleArn: checkUgcRoleArn(payload.ugc.roleArn),
     email: checkUgcEmail(payload.ugc.email),
-    when: payload.ugc.when
   };
 
   return Object.assign(payload, { input });
 }
 
 function processInputHmac(src) {
-  let hkey = Buffer.from(process.env.hkey);
-  const hmac = crypto.createHmac("sha256", hkey);
+  const hmac = crypto.createHmac("sha256", hKey);
   hmac.update(src);
 
   return hmac.digest();
@@ -78,7 +77,7 @@ function processInput(payload) {
         HEmail: { B: hEmail },
         EEmail: { B: eEmail },
         AcctId: { N: acctId },
-        Submitted: { N: String(payload.input.when) }
+        Submitted: { N: String(Date.now()) }
       }
     })
   );
@@ -93,7 +92,7 @@ function saveRecord(payload) {
 
 function register(evt, ctx) {
   let tmp = querystring.parse(evt.body);
-  let ugc = { roleArn: tmp.roleArn, email: tmp.email, when: tmp.when };
+  let ugc = { roleArn: tmp.roleArn, email: tmp.email };
 
   return Promise.resolve({ ugc })
     .then(checkUgc)
