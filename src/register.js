@@ -6,8 +6,9 @@ const DOMAIN = process.env.DOMAIN || 'summit18.awsug.tw'
 
 function extractRoleArn(s) {
   s = s.trim()
+
   // Use alphanumeric and '+=,.@-_' characters. Maximum 64 characters.
-  let roleRegex = /^arn:aws:iam::\d{12}:[\w\d+=,.@\-_]{1,64}$/
+  let roleRegex = /^arn:aws:iam::\d{12}:role\/[\w\d+=,.@\-_]{1,64}$/
 
   if (roleRegex.test(s)) {
     return s
