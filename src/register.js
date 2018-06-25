@@ -5,9 +5,9 @@ const querystring = require("querystring");
 const hKey = Buffer.from(process.env.H_KEY);
 const kmsKeyAlias = process.env.KMS_KEY_ALIAS;
 const regListName = process.env.REG_LIST;
+const verifierArn = process.env.VERIFIER_ARN;
 
-const mailSubject = `AWS User Group 抽獎確認`;
-const due = Date.parse('2018-06-28T07:00:00Z')
+const due = Date.parse("2018-06-28T07:00:00Z");
 
 function checkUgcRoleArn(s) {
   s = s.trim();
@@ -42,10 +42,33 @@ function checkUgc(payload) {
 }
 
 function verifyRole(payload) {
-  let sts = new AWS.STS()
+  let sts = new AWS.STS();
 
-  
-  return payload
+  return sts
+    .assumeRole({
+      RoleArn: verifierArn,
+      RoleSessionName: "summit18-lucky-draw"
+    })
+    .promise()
+    .then(ret => {
+      let sts = new AWS.STS({
+        accessKeyId: ret.Credentials.AccessKeyId,
+        secretAccessKey: ret.Credentials.SecretAccessKey,
+        sessionToken: ret.Credentials.SessionToken
+      });
+
+      return sts
+        .assumeRole({
+          RoleArn: payload.input.roleArn,
+          RoleSessionName: "summit18-lucky-draw"
+        })
+        .promise()
+        .catch(err => {
+          throw new Error("AssumeRole (user) failed");
+        });
+      // Clear error stack / msg to prevent info leak
+    })
+    .then(_ => payload);
 }
 
 function processInputHmac(src) {
@@ -106,13 +129,9 @@ function saveRecord(payload) {
     .then(_ => payload);
 }
 
-function sendMail(payload) {
-  return payload
-}
-
 function register(evt, ctx) {
   if (Date.now() > due) {
-    return Promise.reject('due')
+    return Promise.reject("due");
   }
 
   let tmp = querystring.parse(evt.body);
@@ -123,7 +142,6 @@ function register(evt, ctx) {
     .then(verifyRole)
     .then(processInput)
     .then(saveRecord)
-    .then(sendMail);
 }
 
 module.exports = {

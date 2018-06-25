@@ -24,6 +24,7 @@ provider:
     KMS_KEY_ALIAS: ${self:custom.conf.kmsKeyAlias}
     FROM_ADDRESS: ${self:custom.conf.fromAddress}
     REG_LIST: ${env:REG_LIST, self:resources.Outputs.RegListName.Value}
+    VERIFIER_ARN: ${self:custom.conf.verifierArn}
   iamRoleStatements:
     - Effect: "Allow"
       Action: "sts:AssumeRole"
