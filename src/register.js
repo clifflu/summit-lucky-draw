@@ -7,7 +7,7 @@ const kmsKeyAlias = process.env.KMS_KEY_ALIAS;
 const regListName = process.env.REG_LIST;
 const verifierArn = process.env.VERIFIER_ARN;
 
-const due = Date.parse("2018-06-28T07:00:00Z");
+const due = Date.parse("2018-06-28T15:30:00+0800");
 
 function checkUgcRoleArn(s) {
   s = s.trim();
