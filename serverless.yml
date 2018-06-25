@@ -9,9 +9,7 @@ custom:
   conf: # Match those in mail templates as well
     domain: summit18.awsug.tw
     verifierArn: arn:aws:iam::406053587786:role/verifierSummit18
-  email:
     fromAddress: no-reply@awsug.tw
-  crypto:
     hKey: defaultKey
     kmsKeyAlias: alias/summit18
 
@@ -22,9 +20,10 @@ provider:
   region: us-west-2
   environment:
     DOMAIN: ${self:custom.conf.domain}
-    H_KEY: ${self:custom.crypto.hKey}
-    KMS_KEY_ALIAS: ${self:custom.crypto.kmsKeyAlias}
-    FROM_ADDRESS: ${self:custom.email.fromAddress}
+    H_KEY: ${self:custom.conf.hKey}
+    KMS_KEY_ALIAS: ${self:custom.conf.kmsKeyAlias}
+    FROM_ADDRESS: ${self:custom.conf.fromAddress}
+    REG_LIST: ${self:resources.Outputs.RegListName.Value}
   iamRoleStatements:
     - Effect: "Allow"
       Action: "sts:AssumeRole"
@@ -37,7 +36,7 @@ provider:
       Resource: "*"
       Condition:
         StringEquals:
-          ses:FromAddress: ${self:custom.email.fromAddress}}
+          ses:FromAddress: ${self:custom.conf.fromAddress}}
 
 plugins:
   - serverless-finch
@@ -82,7 +81,7 @@ resources:
     MasterKeyAlias:
       Type: AWS::KMS::Alias
       Properties:
-        AliasName: ${self:custom.crypto.kmsKeyAlias}
+        AliasName: ${self:custom.conf.kmsKeyAlias}
         TargetKeyId:
           Ref: MasterKey
     RegList:
@@ -153,3 +152,6 @@ resources:
           ScaleOutCooldown: 60
           PredefinedMetricSpecification:
             PredefinedMetricType: DynamoDBWriteCapacityUtilization
+  Outputs:
+    RegListName:
+      Value: {Ref: RegList}
