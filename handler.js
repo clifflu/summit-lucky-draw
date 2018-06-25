@@ -1,4 +1,4 @@
-const DOMAIN = process.env.DOMAIN || "summit18.awsug.tw";
+const DOMAIN = process.env.DOMAIN
 
 function promised(fp, redirPath) {
   return (evt, ctx, cb) => {
