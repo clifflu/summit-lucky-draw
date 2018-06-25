@@ -23,7 +23,7 @@ provider:
     H_KEY: ${self:custom.conf.hKey}
     KMS_KEY_ALIAS: ${self:custom.conf.kmsKeyAlias}
     FROM_ADDRESS: ${self:custom.conf.fromAddress}
-    REG_LIST: ${self:resources.Outputs.RegListName.Value}
+    REG_LIST: ${env:REG_LIST, self:resources.Outputs.RegListName.Value}
   iamRoleStatements:
     - Effect: "Allow"
       Action: "sts:AssumeRole"
