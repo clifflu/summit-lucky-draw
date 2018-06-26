@@ -1,7 +1,6 @@
 
 header, .wrapper {
   min-width: 600px;
-  max-width: 960px;
 }
 
 header {
@@ -23,6 +22,7 @@ header h1 {
 .wrapper {
   padding-top: 5rem;
   margin: 0 8%;
+  max-width: 960px;
 }
 
 #frmRegister div {
