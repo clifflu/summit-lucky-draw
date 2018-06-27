@@ -53,6 +53,8 @@ functions:
       - http:
           path: api/register
           method: post
+  drawOne:
+    handler: handler.drawOne
 
 resources:
   Resources:
