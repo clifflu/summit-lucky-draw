@@ -98,10 +98,11 @@
 
 <script>
   $(() => {
-    $('#privacy').on('change', function () {
-      $('#submit').prop('disabled', !$(this).prop('checked'))
-    })
-
+    function updateProps() {
+      $('#submit').prop('disabled', !$('#privacy').prop('checked'))
+    }
+    $('#privacy').off('change').on('change', updateProps).trigger('change')
+    
   })
 </script>
 
