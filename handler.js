@@ -1,6 +1,6 @@
 const DOMAIN = process.env.DOMAIN;
 
-function wrapped(fp, successPath, failPath) {
+function wrappedWebRequest(fp, successPath, failPath) {
   function redir(path, cb) {
     cb(null, {
       statusCode: 303,
@@ -20,10 +20,17 @@ function wrapped(fp, successPath, failPath) {
   };
 }
 
+function drawOne (evt, ctx, cb) {
+  return require('./src/draw').one()
+    .then(data => cb(null, data))
+    .catch(cb)
+}
+
 module.exports = {
-  register: wrapped(
+  register: wrappedWebRequest(
     require("./src/register").register,
     "success.html",
     "again.html"
-  )
+  ),
+  drawOne
 };
