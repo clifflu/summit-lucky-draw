@@ -53,12 +53,6 @@ functions:
       - http:
           path: api/register
           method: post
-  verify:
-    handler: handler.verify
-    events:
-      - http:
-          path: api/verify
-          method: get
 
 resources:
   Resources:
