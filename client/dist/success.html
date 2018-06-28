@@ -22,4 +22,12 @@
   </div>
 </body>
 
+<script>
+  $(() => {
+    let md = new MobileDetect(window.navigator.userAgent)
+    $('body').css('font-size', md.phone() ? '20pt' : '18pt')
+  })
+</script>
+
+
 </html>
