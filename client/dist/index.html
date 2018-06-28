@@ -6,6 +6,7 @@
   <title>AWS User Group Taiwan 抽獎</title>
   <link rel="stylesheet" type="text/css" href="main.css">
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="mobile-detect.min.js"></script>
 </head>
 
 <body>
@@ -102,7 +103,8 @@
       $('#submit').prop('disabled', !$('#privacy').prop('checked'))
     }
     $('#privacy').off('change').on('change', updateProps).trigger('change')
-    
+    let md = new MobileDetect(window.navigator.userAgent)
+    $('body').css('font-size', md.phone() ? '20pt' : '18pt')
   })
 </script>
 
